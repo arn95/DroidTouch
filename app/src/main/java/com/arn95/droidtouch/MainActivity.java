@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         Vibrator vibrator = (Vibrator) MainActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
         DroidTouch droidTouch = new DroidTouch(getSupportFragmentManager());
         if (!droidTouch.isShown("login_dialog")) {
-            if (event.getPressure() > 0.7 && event.getPressure() < 1.0) {
+            if (event.getPressure() > 0.7 && !activity_started) {
                 //show dialog
                 droidTouch.createDialog("login_dialog",R.layout.activity_login,1000,1000);
                 droidTouch.showDialog("login_dialog");
@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             if (event.getPressure() >= 1) {
                 if (!activity_started) {
                     //open activity fullscreen
+                    vibrator.vibrate(30);
                     droidTouch.dismissDialog("login_dialog");
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    vibrator.vibrate(30);
                     activity_started = true;
                 }
             } else if (event.getPressure() < 0.7 || event.getAction() == MotionEvent.ACTION_UP) {

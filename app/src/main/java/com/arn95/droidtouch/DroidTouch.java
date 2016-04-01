@@ -32,7 +32,7 @@ public class DroidTouch implements View.OnTouchListener{
         dialogBundleHashMap = new HashMap<>();
     }
 
-    public boolean createDialog(String tag, View viewToTouch, int viewToInflateId, Intent activityIntent){
+    public boolean addDialog(String tag, View viewToTouch, int viewToInflateId, Intent activityIntent){
         if (!dialogBundleHashMap.containsKey(tag)) {
             DialogParams dialogParams = new DialogParams(viewToInflateId,viewToTouch.getId(),1000,1000);
             DroidTouchDialog dialog = DroidTouchDialog.newInstance(dialogParams);

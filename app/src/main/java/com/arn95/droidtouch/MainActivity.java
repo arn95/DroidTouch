@@ -36,13 +36,15 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        droidTouch.setActivityState("login_dialog", false);
+        //true if mother activity resumed
+        droidTouch.setCurrentActivityState("login_dialog", true);
 
     }
 
     @Override
     protected void onStop() {
-        droidTouch.setActivityState("login_dialog", true);
+        //false if mother activity stopped
+        droidTouch.setCurrentActivityState("login_dialog", false);
         super.onStop();
     }
 }

@@ -157,10 +157,10 @@ public class DroidTouch implements View.OnTouchListener{
         return null;
     }
 
-    public void setActivityState(String tag, boolean state){
-        dialogBundleHashMap.get(tag).isActivityStarted = state;
+    public void setCurrentActivityState(String tag, boolean state){
+        dialogBundleHashMap.get(tag).isActivityStarted = !state;
         if (activeDialogBundle != null && activeDialogBundle.dialogTag.equals(tag)) {
-                activeDialogBundle.isActivityStarted = state;
+                activeDialogBundle.isActivityStarted = !state;
         }
     }
 

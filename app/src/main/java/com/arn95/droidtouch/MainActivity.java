@@ -13,56 +13,37 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
+public class MainActivity extends AppCompatActivity{
 
-    private boolean activity_started;
-    TextView textView;
+    DroidTouch droidTouch;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = (TextView) findViewById(R.id.textView);
 
         Button button = (Button) findViewById(R.id.button);
-        //startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
+        droidTouch = new DroidTouch(this,getSupportFragmentManager());
         if (button != null) {
-            button.setOnTouchListener(this);
+            droidTouch.createDialog("login_dialog",button,R.layout.activity_login,new Intent(MainActivity.this,LoginActivity.class));
+            button.setOnTouchListener(droidTouch);
         }
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        textView.setText("" + event.getPressure());
-        Vibrator vibrator = (Vibrator) MainActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-        DroidTouch droidTouch = new DroidTouch(getSupportFragmentManager());
-        if (!droidTouch.isShown("login_dialog")) {
-            if (event.getPressure() > 0.7 && !activity_started) {
-                //show dialog
-                droidTouch.createDialog("login_dialog",R.layout.activity_login,1000,1000);
-                droidTouch.showDialog("login_dialog");
-                vibrator.vibrate(30);
-            }
-        } else {
-            if (event.getPressure() >= 1) {
-                if (!activity_started) {
-                    //open activity fullscreen
-                    vibrator.vibrate(30);
-                    droidTouch.dismissDialog("login_dialog");
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    activity_started = true;
-                }
-            } else if (event.getPressure() < 0.7 || event.getAction() == MotionEvent.ACTION_UP) {
-                //dismiss dialog
-                droidTouch.dismissDialog("login_dialog");
-            }
-        }
-        return true;
-    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        activity_started = false;
+        droidTouch.setActivityState("login_dialog", false);
+
+    }
+
+    @Override
+    protected void onStop() {
+        droidTouch.setActivityState("login_dialog", true);
+        super.onStop();
     }
 }
 

@@ -22,11 +22,11 @@ public class DroidTouchDialog extends DialogFragment {
         //required
     }
 
-    public static DroidTouchDialog newInstance(int viewId, int width, int height) {
+    public static DroidTouchDialog newInstance(DialogParams params) {
         Bundle args = new Bundle();
-        args.putInt("width", width);
-        args.putInt("height", height);
-        args.putInt("viewId", viewId);
+        args.putInt("width", params.width);
+        args.putInt("height", params.height);
+        args.putInt("viewId", params.viewId);
 
         DroidTouchDialog fragment = new DroidTouchDialog();
         fragment.setArguments(args);

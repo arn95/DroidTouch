@@ -1,3 +1,5 @@
+**DEPRECATED**
+
 # DroidTouch
 Simulates force touch on Android by using MotionEvent's pressure method.
 
